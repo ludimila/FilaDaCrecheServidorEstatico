@@ -21,11 +21,12 @@ fs.readFile(demandFile, 'utf8', function(err, contents) {
 }) 
 
 var app = express()
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 //test if server is running ok - delete later
-app.post('/', function (req, res) {
-   res.send('POST request to homepage');
+app.post('/schoolsLocations', function (req, res) {
+    res.send(req.body)
 }) 
 
 //server static files and send to client
@@ -39,9 +40,7 @@ app.get('/demand.json', function (req, res) {
     res.json(resultJsonDemand)
 })
 
-app.post('/schoolsLocations', function(req, res){
-    console.log(req.body)
-    res.send(req.body)
-})
 
 app.listen(8080)
+
+console.log('Servidor rodando')
